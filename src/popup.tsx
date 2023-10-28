@@ -1,10 +1,10 @@
 import { CountButton } from "~features/count-button"
 
-import "~style.css"
+import "./style.css"
 
 function IndexPopup() {
   return (
-    <div className="plasmo-flex plasmo-items-center plasmo-justify-center plasmo-h-16 plasmo-w-40">
+    <div className="w-[400px] h-200 flex items-center justify-center">
       <CountButton />
     </div>
   )
