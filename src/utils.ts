@@ -1,23 +1,14 @@
 import type { ResolvedTailwindNode } from 'css-to-tailwindcss/lib/TailwindNodesManager'
 
-export function querySelecterWait(selecter: string): Promise<HTMLDivElement> {
+export function querySelecterWait(selecter: string): Promise<HTMLElement> {
     return new Promise((resolve, reject) => {
-        let mob = new MutationObserver(() => {
-            let el = document.querySelector(selecter)
-            if (el) {
-                resolve(el as HTMLDivElement)
-                mob.disconnect()
+        let t = window.setInterval(() => {
+            let dom = document.querySelector(selecter)
+            if (dom) {
+                window.clearInterval(t)
+                resolve(dom as any)
             }
-        })
-
-        mob.observe(document.body, {
-            subtree: true,
-            childList: true
-        })
-
-        setTimeout(() => {
-            reject(new Error('timeout'))
-        }, 60e3);
+        }, 200)
     })
 }
 
