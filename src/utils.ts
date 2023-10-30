@@ -1,4 +1,18 @@
-import type { ResolvedTailwindNode } from 'css-to-tailwindcss/lib/TailwindNodesManager'
+import type { TailwindConvertResult } from '~typing'
+import EventEmitter from 'eventemitter3'
+
+const ee = new EventEmitter()
+
+export function onMessage(name: string, fn: (...a: any[]) => void): VoidFunction {
+    ee.on(name, fn)
+    return () => {
+        ee.off(name, fn)
+    }
+}
+
+export function emitMessage<T>(name: string, msg: T) {
+    ee.emit(name, msg)
+}
 
 export function querySelecterWait(selecter: string): Promise<HTMLElement> {
     return new Promise((resolve, reject) => {
@@ -12,10 +26,7 @@ export function querySelecterWait(selecter: string): Promise<HTMLElement> {
     })
 }
 
-export async function convertToTailwindCSS(css: string): Promise<{
-    tailwindcss: string,
-    nodes: ResolvedTailwindNode[]
-}> {
+export async function convertToTailwindCSS(css: string): Promise<TailwindConvertResult> {
     let resp = await chrome.runtime.sendMessage({
         type: 'to_tailwindcss',
         payload: css

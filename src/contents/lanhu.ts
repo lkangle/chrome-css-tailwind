@@ -1,9 +1,9 @@
 import type { PlasmoCSConfig } from "plasmo"
-import { convertToTailwindCSS, querySelecterWait } from "../utils"
-import { debounce, trim } from "lodash-es";
+import { convertToTailwindCSS, emitMessage, querySelecterWait } from "../utils"
+import { debounce, last, trim } from "lodash-es";
 
 export const config: PlasmoCSConfig = {
-  matches: ["<all_urls>"],
+  matches: ["https://lanhuapp.com/*"],
   run_at: "document_end"
 };
 
@@ -24,14 +24,20 @@ function observeDrawer(el: DrawerElement) {
   ref.current = el;
 
   let obsFn = debounce(async () => {
-    let codebox = el.querySelector('.code_detail > .code_box')
+    let detailbox = el.querySelector('.annotation_item.code_detail')
+    let codebox = detailbox?.querySelector(".code_box")
 
-    let css = '';
+    let anchor: any
+    let css = ''
     // 获取原本的css样式
     {
       if (codebox) {
+        anchor = detailbox;
         css = codebox.textContent;
       } else {
+        let itembox = last(Array.from(el.querySelectorAll('.annotation_container > .annotation_item')))
+        anchor = itembox;
+
         let list = el.querySelectorAll('.annotation_container > .annotation_item li')
         let sizebox = Array.from(list).find(li => {
           return trim(li.textContent).startsWith("大小")
@@ -47,9 +53,11 @@ function observeDrawer(el: DrawerElement) {
       ref.css = css
 
       let ttcss = await convertToTailwindCSS(css)
-      console.log(ttcss, '[[[ttcss')
+      emitMessage("convert_css_success", {
+        anchor, css, ...ttcss
+      })
     }
-  }, 200, { leading: false, trailing: true })
+  }, 100, { leading: false, trailing: true })
 
   let obs = new MutationObserver(obsFn)
   obs.observe(el, {
@@ -63,16 +71,16 @@ function observeDrawer(el: DrawerElement) {
 }
 
 ; (async () => {
-  let detail = await querySelecterWait("#detail_container")
   let obs = new MutationObserver(() => {
-    let drawerList = detail.querySelectorAll('.mu-drawer')
+    const drawerList = document.querySelectorAll('#detail_container .mu-drawer')
+
     let openDrawer = Array.from(drawerList).find(d => d.classList.contains("open"))
     if (openDrawer && ref.current !== openDrawer) {
       observeDrawer(openDrawer as any);
     }
   })
 
-  obs.observe(detail, {
+  obs.observe(document.body, {
     subtree: true,
     attributes: true,
     childList: true,

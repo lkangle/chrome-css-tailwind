@@ -1,69 +1,45 @@
 import type { PlasmoCSConfig, PlasmoRender } from "plasmo";
+import React from 'react'
 import { createRoot } from 'react-dom/client'
-import styleText from "data-text:~style.css"
+import TailwindCss from "~components/TailwindCss";
+import styleText from "data-text:~/style.css"
+import { onMessage } from "~utils";
+import type { CssConvertMessage } from "~typing";
+import { updateConvertResult } from "~hooks/useTwCssResult";
+import { omit } from "lodash-es";
 
 export const config: PlasmoCSConfig = {
     matches: ["<all_urls>"],
     run_at: "document_end"
 };
 
-export const getStyle = () => {
-    let style = document.createElement("style")
-    style.innerHTML = styleText
+const getStyle = () => {
+    const style = document.createElement("style")
+    style.textContent = styleText
     return style
 }
 
-let csscode = `
-.app {
-    @apply w-329 h-17 text-[17px] font-normal text-white leading-[43px];
-    font-family: PingFang SC;
-}
-`
+export const render: PlasmoRender<any> = async () => {
+    const div = document.createElement("tailwindcss-div");
+    const shadow = div.attachShadow({ mode: "open" })
 
-const TailwindCss = ({ code }) => {
-    return (
-        <div>
-            <div className="flex justify-between items-center h-30 w-[100%]">
-                <div>tailwindcss</div>
-                <button>复制</button>
-            </div>
-            <div>
-                <pre>{code}</pre>
-            </div>
-        </div>
-    )
-}
-
-const App = () => {
-    return (
-        <TailwindCss code={csscode} />
-    )
-}
-
-export const getRootContainer = () => {
-    let div = document.createElement("div")
-    div.id = "root_tailwindcss"
-
-    document.body.append(div)
-    return div
-}
-
-export const render: PlasmoRender<any> = async (
-    { createRootContainer },
-) => {
-    const rootContainer = await createRootContainer()
-
+    const style = getStyle()
     const app = document.createElement("div")
-    app.id = 'app';
+    app.id = "app"
+    shadow.append(style, app)
 
-    const style = document.createElement("style")
-    style.innerHTML = styleText
+    // react 渲染
+    {
+        const root = createRoot(app)
+        root.render(
+            <TailwindCss />
+        )
+    }
 
-    rootContainer.append(style, app)
-    const root = createRoot(app) // Any root
-    root.render(
-        <div className="w-300 absolute top-0 z-[99999]">
-            <App />
-        </div>
-    )
+    onMessage('convert_css_success', (msg: CssConvertMessage) => {
+        if (msg.anchor) {
+            msg.anchor.insertAdjacentElement("beforebegin", div)
+            updateConvertResult(omit(msg, 'anchor'))
+        }
+    })
 }

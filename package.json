@@ -10,14 +10,14 @@
     "package": "plasmo package"
   },
   "dependencies": {
-    "@ant-design/cssinjs": "^1.17.2",
-    "antd": "^5.10.2",
     "css-to-tailwindcss": "^1.0.4",
+    "eventemitter3": "^5.0.1",
     "lodash-es": "^4.17.21",
     "plasmo": "0.83.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "tailwindcss": "3.3.3"
+    "tailwindcss": "3.3.3",
+    "zustand": "^4.4.4"
   },
   "devDependencies": {
     "@ianvs/prettier-plugin-sort-imports": "4.1.0",
