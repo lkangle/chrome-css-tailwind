@@ -44,7 +44,7 @@ async function watchDrawer(callback: DrawerWatchFn) {
         return css;
     }
 
-    let obsfn = debounce(ms => {
+    let obsfn = debounce(() => {
         let openel = box.querySelector('.mu-drawer.open')
 
         const setAnchor = () => {
@@ -83,14 +83,17 @@ async function watchDrawer(callback: DrawerWatchFn) {
         }
     }, 200, { leading: false, trailing: true })
 
-    const obs = new MutationObserver(obsfn)
-    obs.observe(box, {
+    const obs = new MutationObserver(async () => {
+        box = await querySelecterWait("#detail_container")
+        obsfn()
+    })
+    obs.observe(document.body, {
         subtree: true,
         childList: true,
         characterData: true
     })
 }
 
-watchDrawer((r) => {
-    console.log(JSON.stringify(r), '[[[sss')
-})
+// watchDrawer((r) => {
+//     console.log(JSON.stringify(r), '[[[sss')
+// })

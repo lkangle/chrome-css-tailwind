@@ -63,18 +63,18 @@ function observeDrawer(el: DrawerElement) {
 }
 
 ; (async () => {
-  // let detail = await querySelecterWait("#detail_container")
-  // let obs = new MutationObserver(() => {
-  //   let drawerList = detail.querySelectorAll('.mu-drawer')
-  //   let openDrawer = Array.from(drawerList).find(d => d.classList.contains("open"))
-  //   if (openDrawer && ref.current !== openDrawer) {
-  //     observeDrawer(openDrawer as any);
-  //   }
-  // })
+  let detail = await querySelecterWait("#detail_container")
+  let obs = new MutationObserver(() => {
+    let drawerList = detail.querySelectorAll('.mu-drawer')
+    let openDrawer = Array.from(drawerList).find(d => d.classList.contains("open"))
+    if (openDrawer && ref.current !== openDrawer) {
+      observeDrawer(openDrawer as any);
+    }
+  })
 
-  // obs.observe(detail, {
-  //   subtree: true,
-  //   attributes: true,
-  //   childList: true,
-  // })
+  obs.observe(detail, {
+    subtree: true,
+    attributes: true,
+    childList: true,
+  })
 })();

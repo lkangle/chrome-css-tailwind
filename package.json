@@ -10,6 +10,8 @@
     "package": "plasmo package"
   },
   "dependencies": {
+    "@ant-design/cssinjs": "^1.17.2",
+    "antd": "^5.10.2",
     "css-to-tailwindcss": "^1.0.4",
     "lodash-es": "^4.17.21",
     "plasmo": "0.83.0",
