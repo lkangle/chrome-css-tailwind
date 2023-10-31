@@ -4,7 +4,7 @@ let converter = new TailwindConverter({
     tailwindConfig: {
         content: [],
         theme: {
-            spacing: Array.from({ length: 500 }).reduce((map, _, index) => {
+            spacing: Array.from({ length: 1000 }).reduce((map, _, index) => {
                 map[index] = `${index}px`;
                 return map;
             }, {}) as any,

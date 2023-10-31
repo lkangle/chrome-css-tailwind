@@ -56,6 +56,8 @@ function observeDrawer(el: DrawerElement) {
       emitMessage("convert_css_success", {
         anchor, css, ...ttcss
       })
+
+      console.log('%c[tailwind]', 'color:#3799a8;', ttcss)
     }
   }, 100, { leading: false, trailing: true })
 
