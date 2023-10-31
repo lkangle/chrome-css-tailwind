@@ -14,3 +14,8 @@ export type CssConvertMessage = {
     anchor: HTMLElement
     css: string
 } & TailwindConvertResult
+
+export type TailwindConfig = {
+    text: string
+    config: any
+}

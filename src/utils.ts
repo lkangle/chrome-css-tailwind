@@ -14,6 +14,10 @@ export function emitMessage<T>(name: string, msg: T) {
     ee.emit(name, msg)
 }
 
+export const randomstr = (len = 8) => {
+    return Math.random().toFixed(16).slice(2, 2 + len)
+}
+
 export function querySelecterWait(selecter: string): Promise<HTMLElement> {
     return new Promise((resolve, reject) => {
         let t = window.setInterval(() => {

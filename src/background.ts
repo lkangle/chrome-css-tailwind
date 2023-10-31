@@ -1,23 +1,21 @@
 import { TailwindConverter } from 'css-to-tailwindcss'
+import { getTailwindConfig } from '~hooks/useTailConfig';
 
-let converter = new TailwindConverter({
-    tailwindConfig: {
-        content: [],
-        theme: {
-            spacing: Array.from({ length: 1000 }).reduce((map, _, index) => {
-                map[index] = `${index}px`;
-                return map;
-            }, {}) as any,
-        },
-    }
-})
+async function convertCSS(css: string) {
+    const config = await getTailwindConfig()
+    const converter = new TailwindConverter({
+        tailwindConfig: config || {}
+    })
+
+    return converter.convertCSS(css)
+}
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponent) => {
     console.log('[message]', message);
     if (!message?.payload) return;
 
     if (message?.type === "to_tailwindcss") {
-        converter.convertCSS(message.payload).then(({ nodes, convertedRoot }) => {
+        convertCSS(message.payload).then(({ nodes, convertedRoot }) => {
             sendResponent({
                 type: 'tailwindcss',
                 nodes,
