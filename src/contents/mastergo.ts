@@ -70,17 +70,16 @@ function observe(box: DrawerElement) {
     }
 }
 
-
 ; (async () => {
-    let box: HTMLDivElement
+    let box: any
 
     const obs = new MutationObserver(() => {
         if (!box?.parentElement) {
             let boxList = document.querySelectorAll(".layout_container .right__container--box")
             if (boxList.length > 0) {
-                box = boxList.item(0) as any
+                box = boxList.item(0)
 
-                observe(box as any)
+                observe(box)
             }
         }
 
