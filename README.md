@@ -8,5 +8,6 @@
 ## TODO
 - [x] css转tailwindcss
 - [x] tailwindcss转换配置项 在pupup中
-- [ ] 插入的tailwindcss支持一键复制
+- [x] 插入的tailwindcss支持一键复制
+- [x] 支持mastergo
 - [ ] background等简写语法支持

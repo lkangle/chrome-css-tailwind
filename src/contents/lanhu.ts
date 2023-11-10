@@ -1,5 +1,5 @@
 import type { PlasmoCSConfig } from "plasmo"
-import { convertToTailwindCSS, emitMessage, querySelecterWait } from "../utils"
+import { convertToTailwindCSS, emitMessage } from "../utils"
 import { debounce, last, trim } from "lodash-es";
 
 export const config: PlasmoCSConfig = {
@@ -54,7 +54,7 @@ function observeDrawer(el: DrawerElement) {
 
       let ttcss = await convertToTailwindCSS(css)
       emitMessage("convert_css_success", {
-        anchor, css, ...ttcss
+        anchor, css, ...ttcss, isLanhu: true
       })
 
       console.log('%c[tailwindcss]', 'color:#3799a8;', ttcss)

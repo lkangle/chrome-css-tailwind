@@ -1,8 +1,8 @@
 {
   "name": "chrome-css-tailwind",
-  "displayName": "css to tailwindcss",
+  "displayName": "Design CSS To Tailwind",
   "version": "0.0.2",
-  "description": "设计搞的css代码转tailwindcss",
+  "description": "设计搞上的css代码转tailwindcss",
   "author": "likangle",
   "scripts": {
     "dev": "plasmo dev",
@@ -33,13 +33,11 @@
   },
   "manifest": {
     "host_permissions": [
-      "https://*/*"
+      "https://lanhuapp.com/*",
+      "https://mastergo.netease.com/*"
     ],
     "permissions": [
       "storage"
-    ],
-    "content_security_policy": {
-      "sandbox": "sandbox allow-scripts allow-forms allow-popups allow-modals; script-src 'self' 'unsafe-eval' 'wasm-unsafe-eval';worker-src 'self' data:"
-    }
+    ]
   }
 }

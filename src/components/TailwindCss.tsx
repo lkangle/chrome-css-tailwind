@@ -18,14 +18,14 @@ const TailwindCss = () => {
     }, [])
 
     const onClick = async () => {
-        let classes = join(first(result.nodes).tailwindClasses, " ")
+        let classes = join(first(result.nodes)?.tailwindClasses, " ")
         await navigator.clipboard.writeText(classes)
 
         showTip()
     }
 
     return (
-        <div className="px-24 mt-15">
+        <div className={"mt-15 " + (result?.isLanhu ? 'px-24' : '')}>
             <div className="flex justify-between items-center h-30 w-[100%]">
                 <h4 className="text-[#000]">tailwindcss</h4>
                 <Popover content="复制成功" open={open} placement="top">

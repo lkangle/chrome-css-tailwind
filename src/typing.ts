@@ -8,6 +8,7 @@ export type IpcMessage<T> = {
 export type TailwindConvertResult = {
     tailwindcss: string,
     nodes: ResolvedTailwindNode[]
+    isLanhu?: boolean
 }
 
 export type CssConvertMessage = {
