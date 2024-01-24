@@ -1,7 +1,7 @@
 {
   "name": "chrome-css-tailwind",
   "displayName": "Design CSS To Tailwind",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "设计搞上的css代码转tailwindcss",
   "author": "likangle",
   "scripts": {
