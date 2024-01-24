@@ -1,6 +1,6 @@
 import useTwCssResult from "~hooks/useTwCssResult"
 import { Popover } from 'antd'
-import { first, join } from "lodash-es"
+import { first, join, map } from "lodash-es"
 import { useCallback, useRef, useState } from "react"
 
 const TailwindCss = () => {
@@ -32,8 +32,14 @@ const TailwindCss = () => {
                     <button className="cursor-pointer" onClick={onClick}>复制</button>
                 </Popover>
             </div>
-            <div className="overflow-auto">
-                <pre>{result?.tailwindcss}</pre>
+            <div className="overflow-auto whitespace-nowrap">
+                {map(result?.nodeList, node => (
+                    <div
+                        className={`leading-[22px] ${node.type === 0 ? 'text-[#565656]' : 'text-[#919191]'}`}
+                    >
+                        <span>{node.text}</span>
+                    </div>
+                ))}
             </div>
         </div>
     )

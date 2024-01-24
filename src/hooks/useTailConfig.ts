@@ -39,8 +39,8 @@ function frameApply<T>(frame: HTMLIFrameElement, text: string): Promise<T> {
             if (msg?.data?.type === key) {
                 let result = msg?.data?.payload
                 resolve(result)
+                window.removeEventListener("message", fn)
             }
-            window.removeEventListener("message", fn)
         }
         window.addEventListener("message", fn)
 
