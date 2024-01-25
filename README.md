@@ -2,7 +2,6 @@
 
 支持的网站有
 - 蓝湖
-- figma
 - master go
 
 ## TODO

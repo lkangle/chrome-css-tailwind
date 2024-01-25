@@ -1,12 +1,12 @@
 {
   "name": "chrome-css-tailwind",
   "displayName": "Design CSS To Tailwind",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "设计搞上的css代码转tailwindcss",
   "author": "likangle",
   "scripts": {
     "dev": "plasmo dev",
-    "build": "plasmo build",
+    "build": "plasmo build --zip",
     "package": "plasmo package"
   },
   "dependencies": {
@@ -14,7 +14,7 @@
     "css-to-tailwindcss": "^1.0.4",
     "eventemitter3": "^5.0.1",
     "lodash-es": "^4.17.21",
-    "plasmo": "0.83.0",
+    "plasmo": "0.84.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "tailwindcss": "3.3.3",

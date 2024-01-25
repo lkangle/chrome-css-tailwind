@@ -33,8 +33,9 @@ const TailwindCss = () => {
                 </Popover>
             </div>
             <div className="overflow-auto whitespace-nowrap">
-                {map(result?.nodeList, node => (
+                {map(result?.nodeList, (node, index) => (
                     <div
+                        key={index}
                         className={`leading-[22px] ${node.type === 0 ? 'text-[#565656]' : 'text-[#919191]'}`}
                     >
                         <span>{node.text}</span>

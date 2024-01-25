@@ -52,12 +52,16 @@ function observeDrawer(el: DrawerElement) {
     if (ref.css !== css) {
       ref.css = css
 
-      let ttcss = await convertToTailwindCSS(css)
-      emitMessage("convert_css_success", {
-        anchor, css, ...ttcss, isLanhu: true
-      })
+      try {
+        const ttcss = await convertToTailwindCSS(css)
+        emitMessage("convert_css_success", {
+          anchor, css, ...ttcss, isLanhu: true
+        })
 
-      console.log('%c[tailwindcss]', 'color:#3799a8;', ttcss)
+        console.log('%c[tailwindcss]', 'color:#3799a8;', ttcss)
+      } catch (e) {
+        console.warn('%c[error]', 'color:red;', e)
+      }
     }
   }, 100, { leading: false, trailing: true })
 

@@ -25,7 +25,7 @@ const useTwCssResult = create<IStore>((set) => {
     return {
         setResult(result) {
             const node = first(result.nodes)
-            const nodeList: INode[] = map(node.rule.nodes, (ru: any) => {
+            const nodeList: INode[] = map(node?.rule?.nodes, (ru: any) => {
                 if (ru.name === 'apply') {
                     return {
                         type: NodeType.TAILWIND,

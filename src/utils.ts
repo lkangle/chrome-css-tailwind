@@ -31,18 +31,18 @@ export function querySelecterWait(selecter: string): Promise<HTMLElement> {
 }
 
 export async function convertToTailwindCSS(css: string): Promise<TailwindConvertResult> {
-    try {
-        let resp = await chrome.runtime.sendMessage({
+    return new Promise((resolve, reject) => {
+        chrome.runtime.sendMessage({
             type: 'to_tailwindcss',
             payload: css
+        }, resp => {
+            if (resp.type === "tailwindcss") {
+                resolve(resp)
+            }
         })
 
-        if (resp.type === "tailwindcss") {
-            return resp
-        }
-        return { tailwindcss: css, nodes: [] }
-    } catch (e) {
-        console.warn('[error]', e)
-        return { tailwindcss: css, nodes: [] }
-    }
+        setTimeout(() => {
+            reject(new Error("timeout 3s."))
+        }, 3e3);
+    })
 }

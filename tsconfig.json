@@ -9,6 +9,7 @@
     "./**/*.tsx"
   ],
   "compilerOptions": {
+    "target": "ES2015",
     "paths": {
       "~*": [
         "./src/*"

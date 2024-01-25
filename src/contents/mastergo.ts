@@ -43,12 +43,16 @@ const callback = debounce(async () => {
     if (code && code !== ref.css) {
         ref.css = code;
 
-        let ttcss = await convertToTailwindCSS(code)
+        try {
+            const ttcss = await convertToTailwindCSS(code)
 
-        emitMessage("convert_css_success", {
-            anchor, css: code, ...ttcss
-        })
-        console.log('%c[tailwindcss]', 'color:#3799a8;', ttcss)
+            emitMessage("convert_css_success", {
+                anchor, css: code, ...ttcss
+            })
+            console.log('%c[tailwindcss]', 'color:#3799a8;', ttcss)
+        } catch (e) {
+            console.warn('%c[error]', 'color:red;', e)
+        }
     }
 }, 100, { leading: false, trailing: true })
 
